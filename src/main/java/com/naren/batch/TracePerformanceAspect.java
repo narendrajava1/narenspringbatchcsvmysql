@@ -12,25 +12,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class TracePerformanceAspect {
 
-    private final Logger logger = LoggerFactory.getLogger(TracePerformanceAspect.class);
+	private final Logger logger = LoggerFactory.getLogger(TracePerformanceAspect.class);
 
-    @Around ("execution(* com.techshard..*.*(..)))")
-    public Object logTracePerformanceAspect(ProceedingJoinPoint joinPoint) throws Throwable {
+	@Around ("execution(* com.naren.batch..*.*(..)))")
+	public Object logTracePerformanceAspect(ProceedingJoinPoint joinPoint) throws Throwable {
 
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+		final MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 
-        //Get intercepted method details
-        String className = methodSignature.getDeclaringType().getSimpleName();
-        String methodName = methodSignature.getName();
+		//Get intercepted method details
+		final String className = methodSignature.getDeclaringType().getSimpleName();
+		final String methodName = methodSignature.getName();
 
-        long start = System.currentTimeMillis();
+		final long start = System.currentTimeMillis();
 
-        Object result = joinPoint.proceed();
-        long end = System.currentTimeMillis();
+		final Object result = joinPoint.proceed();
+		final long end = System.currentTimeMillis();
 
-        //Log method execution time
-        logger.info("Execution time of " + className + "." + methodName + " :: " + (end - start) + " ms");
+		//Log method execution time
+		logger.info("Execution time of " + className + "." + methodName + " :: " + (end - start) + " ms");
 
-        return result;
-    }
+		return result;
+	}
 }
